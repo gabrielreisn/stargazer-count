@@ -1,11 +1,23 @@
 'use client';
 import { GITHUB_REPO_QUERY } from '@/graphql/queries/githubRepoQueries';
 import { useQuery } from '@apollo/client';
-import EnhancedTable from '@/components/PaginatedTable';
+import { EnhancedTable } from '@/components/PaginatedTable';
 import { useMemo, useState } from 'react';
 import { parseSearchQueryData } from '@/modules/parseSearchQueryData';
-import { TextField } from '@mui/material';
+import { TextField, styled } from '@mui/material';
 import { useDebounce } from '@/hooks/useDebounce';
+
+const Main = styled('main')({
+  padding: '8rem',
+  gap: '3rem',
+  display: 'flex',
+  flexDirection: 'column',
+
+  // Media query for mobile devices
+  '@media (max-width: 768px)': {
+    padding: 0,
+  },
+});
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -23,8 +35,9 @@ export default function Home() {
   // if (error) return `Error! ${error.message}`;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <Main>
       <TextField
+        fullWidth
         id="outlined-basic"
         label="Outlined"
         variant="outlined"
@@ -32,6 +45,6 @@ export default function Home() {
         onChange={(e) => setQuery(e.target.value.trim())}
       />
       <EnhancedTable rows={parsedData} />
-    </main>
+    </Main>
   );
 }
