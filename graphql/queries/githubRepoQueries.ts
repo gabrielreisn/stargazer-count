@@ -7,11 +7,8 @@ export const GITHUB_REPO_QUERY = gql(`
       edges {
         node {
           ... on Repository {
+            id
             name
-            owner {
-              login
-            }
-            description
             url
             stargazerCount
             forkCount

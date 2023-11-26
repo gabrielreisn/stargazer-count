@@ -8,6 +8,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 2. generate/update schema on demand
 3. run `curl -H "Authorization: bearer TOKEN" https://api.github.com/graphql -o schema.json``
 
+## Deployment
+
+The production version of the app can be found [here](https://stargazer-count.vercel.app/)
+
 ## requirements
 
 - node v18.17.0 >
