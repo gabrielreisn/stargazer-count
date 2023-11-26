@@ -1,5 +1,5 @@
 import { Skeleton, TableCell } from '@mui/material';
-import { StyledTableCell, StyledTableRow } from '../PaginatedTable.styled';
+import { StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
 
 export function TableLoadingState() {
   return (

@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { TableHeader } from './TableHeader';
 import { Order } from '@/types/common';
 import { StyledEmptyTableRow, StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
-import { TableLoadingState } from './Table/LoadingState';
+import { TableLoadingState } from './LoadingState';
 
 type TableProps = {
   rows: Array<GithubRepositoryData>;

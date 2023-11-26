@@ -1,7 +1,7 @@
 'use client';
 import { GITHUB_REPO_QUERY } from '@/graphql/queries/githubRepoQueries';
 import { useQuery } from '@apollo/client';
-import { EnhancedTable } from '@/components/PaginatedTable';
+import { EnhancedTable } from '@/components/Table/PaginatedTable';
 import { useMemo, useState } from 'react';
 import { parseSearchQueryData } from '@/modules/parseSearchQueryData';
 import { TextField, styled } from '@mui/material';
