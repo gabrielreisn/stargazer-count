@@ -1,5 +1,5 @@
 'use client';
-import { GITHUB_REPO_QUERY } from '@/queries/githubRepoQueries';
+import { GITHUB_REPO_QUERY } from '@/graphql/queries/githubRepoQueries';
 import { useQuery } from '@apollo/client';
 
 export default function Home() {

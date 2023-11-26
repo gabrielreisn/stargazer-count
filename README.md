@@ -2,6 +2,12 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Generating Schema / connecting to Github API
+
+1. you need an access token
+2. generate/update schema on demand
+3. run `curl -H "Authorization: bearer TOKEN" https://api.github.com/graphql -o schema.json``
+
 ## requirements
 
 - node v18.17.0 >
