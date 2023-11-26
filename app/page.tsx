@@ -37,8 +37,9 @@ export default function Home() {
     <Main>
       <TextField
         fullWidth
-        id="outlined-basic"
-        label="Outlined"
+        type="search"
+        id="search-input"
+        label="Search for Github Repositories"
         variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value.trim())}

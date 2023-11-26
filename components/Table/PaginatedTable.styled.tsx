@@ -1,4 +1,4 @@
-import { TableCell, TableRow, styled } from '@mui/material';
+import { Table, TableCell, TableRow, styled } from '@mui/material';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   width: 300,
@@ -17,3 +17,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const StyledEmptyTableRow = styled(TableRow)((props: { emptyRows: number }) => ({
   height: 53 * props.emptyRows,
 }));
+
+export const StyledTable = styled(Table)({
+  minHeight: 400,
+});

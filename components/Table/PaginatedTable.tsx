@@ -1,6 +1,5 @@
 'use client';
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -11,7 +10,7 @@ import { ChangeEvent, useEffect, useMemo, useState, MouseEvent } from 'react';
 import Link from 'next/link';
 import { TableHeader } from './TableHeader';
 import { Order } from '@/types/common';
-import { StyledEmptyTableRow, StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
+import { StyledEmptyTableRow, StyledTable, StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
 import { TableLoadingState } from './LoadingState';
 
 type TableProps = {
@@ -84,7 +83,7 @@ export function EnhancedTable({ rows, loading = false }: TableProps) {
     <Box>
       <Paper>
         <TableContainer>
-          <Table sx={{ minWidth: 750, minHeight: 400 }} aria-labelledby="tableTitle" size="medium">
+          <StyledTable aria-labelledby="tableTitle" size="medium">
             <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -112,7 +111,7 @@ export function EnhancedTable({ rows, loading = false }: TableProps) {
                   <TableLoadingState key={index} />
                 ))}
             </TableBody>
-          </Table>
+          </StyledTable>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE}
