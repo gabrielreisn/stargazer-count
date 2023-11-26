@@ -1,4 +1,4 @@
-import * as React from 'react';
+'use client';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,14 +7,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import { GithubRepositoryData } from '@/types/github';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState, MouseEvent } from 'react';
 import Link from 'next/link';
 import { TableHeader } from './TableHeader';
 import { Order } from '@/types/common';
 import { StyledEmptyTableRow, StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
+import { TableLoadingState } from './Table/LoadingState';
 
 type TableProps = {
   rows: Array<GithubRepositoryData>;
+  loading?: boolean;
 };
 
 const ROWS_PER_PAGE = [5, 10, 25];
@@ -38,11 +40,11 @@ function getComparator<Key extends keyof GithubRepositoryData>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function EnhancedTable({ rows }: TableProps) {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof GithubRepositoryData>('stargazerCount');
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export function EnhancedTable({ rows, loading = false }: TableProps) {
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof GithubRepositoryData>('stargazerCount');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(
     function syncPageOnDataUpdate() {
@@ -51,7 +53,7 @@ export function EnhancedTable({ rows }: TableProps) {
     [rows]
   );
 
-  function handleRequestSort(_event: React.MouseEvent<unknown>, property: keyof GithubRepositoryData) {
+  function handleRequestSort(_event: MouseEvent<unknown>, property: keyof GithubRepositoryData) {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -61,7 +63,7 @@ export function EnhancedTable({ rows }: TableProps) {
     setPage(newPage);
   }
 
-  function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeRowsPerPage(event: ChangeEvent<HTMLInputElement>) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }
@@ -69,7 +71,7 @@ export function EnhancedTable({ rows }: TableProps) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
+  const visibleRows = useMemo(
     () =>
       rows
         .slice()
@@ -105,6 +107,10 @@ export function EnhancedTable({ rows }: TableProps) {
                   <TableCell colSpan={3} />
                 </StyledEmptyTableRow>
               )}
+              {loading &&
+                Array.from({ length: rowsPerPage }, (_, index) => index + 1).map((_row, index) => (
+                  <TableLoadingState key={index} />
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

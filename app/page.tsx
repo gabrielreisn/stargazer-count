@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { parseSearchQueryData } from '@/modules/parseSearchQueryData';
 import { TextField, styled } from '@mui/material';
 import { useDebounce } from '@/hooks/useDebounce';
+import { ErrorMessage } from '@/components/ErrorMessage';
 
 const Main = styled('main')({
   padding: '8rem',
@@ -16,6 +17,7 @@ const Main = styled('main')({
   // Media query for mobile devices
   '@media (max-width: 768px)': {
     padding: 0,
+    gap: '0.5rem',
   },
 });
 
@@ -31,9 +33,6 @@ export default function Home() {
 
   const parsedData = useMemo(() => parseSearchQueryData(data), [data]);
 
-  // if (loading) return 'Loading...';
-  // if (error) return `Error! ${error.message}`;
-
   return (
     <Main>
       <TextField
@@ -44,7 +43,8 @@ export default function Home() {
         value={query}
         onChange={(e) => setQuery(e.target.value.trim())}
       />
-      <EnhancedTable rows={parsedData} />
+      <EnhancedTable rows={parsedData} loading={loading} />
+      {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </Main>
   );
 }
