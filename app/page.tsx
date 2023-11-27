@@ -1,7 +1,7 @@
 'use client';
 import { GITHUB_REPO_QUERY } from '@/graphql/queries/githubRepoQueries';
 import { useQuery } from '@apollo/client';
-import { EnhancedTable } from '@/components/Table/PaginatedTable';
+import { PaginatedTable } from '@/components/Table/PaginatedTable';
 import { useMemo, useState } from 'react';
 import { parseSearchQueryData } from '@/modules/parseSearchQueryData';
 import { TextField, styled } from '@mui/material';
@@ -37,6 +37,7 @@ export default function Home() {
     <Main>
       <TextField
         fullWidth
+        role="searchbox"
         type="search"
         id="search-input"
         label="Search for Github Repositories"
@@ -44,8 +45,8 @@ export default function Home() {
         value={query}
         onChange={(e) => setQuery(e.target.value.trim())}
       />
-      <EnhancedTable rows={parsedData} loading={loading} />
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
+      <PaginatedTable rows={parsedData} loading={loading} />
+      {error && <ErrorMessage>Error: {error.message}</ErrorMessage>}
     </Main>
   );
 }

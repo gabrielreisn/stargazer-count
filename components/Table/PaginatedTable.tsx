@@ -39,7 +39,7 @@ function getComparator<Key extends keyof GithubRepositoryData>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function EnhancedTable({ rows, loading = false }: TableProps) {
+export function PaginatedTable({ rows, loading = false }: TableProps) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof GithubRepositoryData>('stargazerCount');
   const [page, setPage] = useState(0);
@@ -83,14 +83,14 @@ export function EnhancedTable({ rows, loading = false }: TableProps) {
     <Box>
       <Paper>
         <TableContainer>
-          <StyledTable aria-labelledby="tableTitle" size="medium">
+          <StyledTable aria-labelledby="search-table" size="medium" role="table">
             <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-            <TableBody>
+            <TableBody data-testid="search-table-body">
               {visibleRows.map((row, index) => {
                 const labelId = `table-${index}`;
 
                 return (
-                  <StyledTableRow hover tabIndex={-1} key={row.id}>
+                  <StyledTableRow hover tabIndex={-1} key={row.id} data-testid="filled-row">
                     <StyledTableCell component="th" id={labelId} scope="row">
                       <Link href={row.url} target="_blank" rel="noopener noreferrer">
                         {row.name}
@@ -102,7 +102,7 @@ export function EnhancedTable({ rows, loading = false }: TableProps) {
                 );
               })}
               {emptyRows > 0 && (
-                <StyledEmptyTableRow emptyRows={emptyRows}>
+                <StyledEmptyTableRow emptyRows={emptyRows} data-testid="empty-row">
                   <TableCell colSpan={3} />
                 </StyledEmptyTableRow>
               )}

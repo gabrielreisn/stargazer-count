@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "test": "jest --passWithNoTests",
-    "test:e2e": "playwright test --pass-with-no-tests",
+    "test": "jest",
+    "test:e2e": "playwright test",
     "lint": "next lint"
   },
   "dependencies": {
@@ -34,6 +34,8 @@
     "@playwright/test": "^1.39.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/jest": "^29.5.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
