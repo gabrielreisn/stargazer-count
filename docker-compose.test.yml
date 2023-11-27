@@ -1,0 +1,28 @@
+version: '3'
+services:
+  lint:
+    build: .
+    command: pnpm run lint
+    volumes:
+      - /app/
+      - /app/node_modules
+  type-check:
+    build: .
+    command: pnpm run type-check
+    volumes:
+      - /app/
+      - /app/node_modules
+  jest:
+    build: .
+    command: pnpm run test
+    volumes:
+      - /app/
+      - /app/node_modules
+  end-to-end:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: pnpm run test:e2e
+    volumes:
+      - /app/
+      - /app/node_modules

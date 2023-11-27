@@ -1,9 +1,10 @@
-version: "3"
+version: '3'
 services:
   web:
     build: .
     ports:
       - 3000:3000
+    command: pnpm run dev
     volumes:
       - /app/
       - /app/node_modules

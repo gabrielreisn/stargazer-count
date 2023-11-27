@@ -10,3 +10,6 @@ COPY pnpm-lock.yaml /app
 RUN pnpm install
 
 COPY . /app
+
+RUN pnpm playwright install-deps
+RUN pnpm exec playwright install
