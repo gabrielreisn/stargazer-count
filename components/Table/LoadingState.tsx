@@ -3,7 +3,7 @@ import { StyledTableCell, StyledTableRow } from './PaginatedTable.styled';
 
 export function TableLoadingState() {
   return (
-    <StyledTableRow hover tabIndex={-1}>
+    <StyledTableRow hover tabIndex={-1} data-testid="skeleton-row">
       <StyledTableCell scope="row">
         <Skeleton animation="wave" height={60} />
       </StyledTableCell>

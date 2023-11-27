@@ -73,6 +73,11 @@ jobs:
   playwright:
     name: End-to-end Test
     runs-on: ubuntu-latest
+
+    env:
+      GITHUB_API_ENDPOINT: ${{secrets.API_ENDPOINT}}
+      GITHUB_API_ACCESS_TOKEN: ${{secrets.API_ACCESS_TOKEN}}
+
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2.0.1
@@ -88,5 +93,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Jest run
+      - name: Install headless Playwright instance
+        run: pnpm exec playwright install
+
+      - name: Playwright run
         run: pnpm test:e2e

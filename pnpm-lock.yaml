@@ -48,10 +48,16 @@ devDependencies:
     version: 1.39.0
   '@testing-library/jest-dom':
     specifier: ^6.1.4
-    version: 6.1.4(jest@29.7.0)
+    version: 6.1.4(@types/jest@29.5.10)(jest@29.7.0)
   '@testing-library/react':
     specifier: ^14.0.0
     version: 14.0.0(react-dom@18.0.0)(react@18.0.0)
+  '@testing-library/user-event':
+    specifier: ^14.5.1
+    version: 14.5.1(@testing-library/dom@9.3.3)
+  '@types/jest':
+    specifier: ^29.5.10
+    version: 29.5.10
   '@types/node':
     specifier: ^20
     version: 20.0.0
@@ -2251,7 +2257,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/jest-dom@6.1.4(jest@29.7.0):
+  /@testing-library/jest-dom@6.1.4(@types/jest@29.5.10)(jest@29.7.0):
     resolution: {integrity: sha512-wpoYrCYwSZ5/AxcrjLxJmCU6I5QAJXslEeSiMQqaWmP2Kzpd1LvF/qxmAIW2qposULGWq2gw30GgVNFLSc2Jnw==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
     peerDependencies:
@@ -2271,6 +2277,7 @@ packages:
     dependencies:
       '@adobe/css-tools': 4.3.1
       '@babel/runtime': 7.23.2
+      '@types/jest': 29.5.10
       aria-query: 5.3.0
       chalk: 3.0.0
       css.escape: 1.5.1
@@ -2292,6 +2299,15 @@ packages:
       '@types/react-dom': 18.0.0
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    dev: true
+
+  /@testing-library/user-event@14.5.1(@testing-library/dom@9.3.3):
+    resolution: {integrity: sha512-UCcUKrUYGj7ClomOo2SpNVvx4/fkd/2BbIHDCle8A0ax+P3bU7yJwDBDrS6ZwdTMARWTGODX1hEsCcO+7beJjg==}
+    engines: {node: '>=12', npm: '>=6'}
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    dependencies:
+      '@testing-library/dom': 9.3.3
     dev: true
 
   /@tootallnate/once@2.0.0:
@@ -2352,6 +2368,13 @@ packages:
     resolution: {integrity: sha512-1nESsePMBlf0RPRffLZi5ujYh7IH1BWL4y9pr+Bn3cJBdxz+RTP8bUFljLz9HvzhhOSWKdyBZ4DIivdL6rvgZg==}
     dependencies:
       '@types/istanbul-lib-report': 3.0.2
+    dev: true
+
+  /@types/jest@29.5.10:
+    resolution: {integrity: sha512-tE4yxKEphEyxj9s4inideLHktW/x6DwesIwWZ9NN1FKf9zbJYsnhBoA9vrHA/IuIOKwPa5PcFBNV4lpMIOEzyQ==}
+    dependencies:
+      expect: 29.7.0
+      pretty-format: 29.7.0
     dev: true
 
   /@types/js-yaml@4.0.9:

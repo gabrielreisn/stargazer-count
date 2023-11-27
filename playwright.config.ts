@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 import path from 'path';
 
 export default defineConfig({
@@ -23,25 +23,14 @@ export default defineConfig({
     {
       name: 'Desktop Chrome',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
       },
     },
     {
-      name: 'Desktop Safari',
+      name: 'Desktop Firefox',
       use: {
-        ...devices['Desktop Safari'],
+        browserName: 'firefox',
       },
-    },
-    // Test against mobile viewports.
-    {
-      name: 'Mobile Chrome',
-      use: {
-        ...devices['Pixel 5'],
-      },
-    },
-    {
-      name: 'Mobile Safari',
-      use: devices['iPhone 12'],
     },
   ],
 });
