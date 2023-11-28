@@ -704,6 +704,10 @@ export const successfulParsedResponseData = [
 export const rawSuccessfulResponseData = {
   "data": {
     "search": {
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": 'xxxxxxxx'
+      },
       "edges": [
         {
           "node": {

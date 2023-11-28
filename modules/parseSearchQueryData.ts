@@ -18,4 +18,5 @@ export function parseSearchQueryData(data: SearchRepositoriesQuery | undefined):
       )
     }
   }) as Array<GithubRepositoryData>
+
 }

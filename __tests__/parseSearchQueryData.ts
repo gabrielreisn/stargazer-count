@@ -3,6 +3,10 @@ import { parseSearchQueryData } from "@/modules/parseSearchQueryData";
 
 const inputData: SearchRepositoriesQuery = {
   "search": {
+    "pageInfo": {
+      hasNextPage: true,
+      endCursor: 'xxxxxxxx'
+    },
     "edges": [
       {
         "node": {

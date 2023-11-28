@@ -15,7 +15,8 @@ describe('Page', () => {
           query: GITHUB_REPO_QUERY,
           variables: {
             query: '',
-            first: 100,
+            first: 10,
+            after: null,
           },
         },
         error: new Error('Something went wrong'),
@@ -37,7 +38,8 @@ describe('Page', () => {
           query: GITHUB_REPO_QUERY,
           variables: {
             query: '',
-            first: 100,
+            first: 10,
+            after: null,
           },
         },
         result: {},
@@ -60,7 +62,8 @@ describe('Page', () => {
           query: GITHUB_REPO_QUERY,
           variables: {
             query: '',
-            first: 100,
+            first: 10,
+            after: null,
           },
         },
         result: rawSuccessfulResponseData,
