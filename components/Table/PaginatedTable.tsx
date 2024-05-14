@@ -16,9 +16,11 @@ import { TableLoadingState } from './LoadingState';
 type TableProps = {
   rows: Array<GithubRepositoryData>;
   loading?: boolean;
+  fetchMoreCallback?: () => void;
+  changeRowsPerPageCallback?: (rows: number) => void;
 };
 
-const ROWS_PER_PAGE = [5, 10, 25];
+export const ROWS_PER_PAGE = [5, 10, 25];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -39,15 +41,28 @@ function getComparator<Key extends keyof GithubRepositoryData>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function PaginatedTable({ rows, loading = false }: TableProps) {
+export function PaginatedTable({ rows, loading = false, fetchMoreCallback, changeRowsPerPageCallback }: TableProps) {
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof GithubRepositoryData>('stargazerCount');
+  const [orderBy, setOrderBy] = useState<keyof GithubRepositoryData>('name');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const pages = Math.ceil(rows.length / rowsPerPage);
+
+  useEffect(
+    function fetchMoreDataBeforeTwoPagesToEnd() {
+      if (page > 0 && page + 2 >= pages) {
+        fetchMoreCallback?.();
+      }
+    },
+    [fetchMoreCallback, page, pages]
+  );
+
   useEffect(
     function syncPageOnDataUpdate() {
-      setPage(0);
+      if (rows.length === 0) {
+        setPage(0);
+      }
     },
     [rows]
   );
@@ -56,6 +71,7 @@ export function PaginatedTable({ rows, loading = false }: TableProps) {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    setPage(0);
   }
 
   function handleChangePage(_event: unknown, newPage: number) {
@@ -64,6 +80,7 @@ export function PaginatedTable({ rows, loading = false }: TableProps) {
 
   function handleChangeRowsPerPage(event: ChangeEvent<HTMLInputElement>) {
     setRowsPerPage(parseInt(event.target.value, 10));
+    changeRowsPerPageCallback?.(parseInt(event.target.value, 10));
     setPage(0);
   }
 

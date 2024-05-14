@@ -1,8 +1,8 @@
 'use client';
 import { GITHUB_REPO_QUERY } from '@/graphql/queries/githubRepoQueries';
 import { useQuery } from '@apollo/client';
-import { PaginatedTable } from '@/components/Table/PaginatedTable';
-import { useMemo, useState } from 'react';
+import { PaginatedTable, ROWS_PER_PAGE } from '@/components/Table/PaginatedTable';
+import { useCallback, useMemo, useState } from 'react';
 import { parseSearchQueryData } from '@/modules/parseSearchQueryData';
 import { TextField, styled } from '@mui/material';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -23,15 +23,43 @@ const Main = styled('main')({
 
 export default function Home() {
   const [query, setQuery] = useState('');
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
   const debouncedQuery = useDebounce(query, 300);
-  const { loading, error, data } = useQuery(GITHUB_REPO_QUERY, {
+  const { loading, error, data, fetchMore } = useQuery(GITHUB_REPO_QUERY, {
     variables: {
-      first: 100,
+      first: rowsPerPage * 2,
       query: debouncedQuery,
+      after: null,
     },
   });
 
   const parsedData = useMemo(() => parseSearchQueryData(data), [data]);
+
+  const hasNextPage = data?.search.pageInfo.hasNextPage;
+  const endCursor = data?.search.pageInfo.endCursor;
+
+  const handleFetchMore = useCallback(() => {
+    if (hasNextPage === false) return;
+
+    fetchMore({
+      variables: {
+        first: rowsPerPage * 2,
+        query: debouncedQuery,
+        after: endCursor,
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        const previousEdges = prevResult.search?.edges ?? [];
+        const fetchMoreEdges = fetchMoreResult.search?.edges ?? [];
+        return {
+          search: {
+            __typename: fetchMoreResult.search.__typename,
+            edges: previousEdges.concat(fetchMoreEdges),
+            pageInfo: fetchMoreResult.search.pageInfo,
+          },
+        };
+      },
+    });
+  }, [hasNextPage, fetchMore, rowsPerPage, debouncedQuery, endCursor]);
 
   return (
     <Main>
@@ -45,7 +73,12 @@ export default function Home() {
         value={query}
         onChange={(e) => setQuery(e.target.value.trim())}
       />
-      <PaginatedTable rows={parsedData} loading={loading} />
+      <PaginatedTable
+        rows={parsedData}
+        loading={loading}
+        fetchMoreCallback={handleFetchMore}
+        changeRowsPerPageCallback={(num) => setRowsPerPage(num)}
+      />
       {error && <ErrorMessage>Error: {error.message}</ErrorMessage>}
     </Main>
   );
